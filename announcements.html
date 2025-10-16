@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements - Student Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .back-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .announcements-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .announcements-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .announcements-header i {
+            font-size: 2em;
+            color: #e74c3c;
+            margin-right: 15px;
+        }
+
+        .announcements-header h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+        }
+
+        .announcement {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .announcement::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+        }
+
+        .announcement:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .announcement:nth-child(even) {
+            border-left-color: #e74c3c;
+        }
+
+        .announcement:nth-child(even)::before {
+            background: linear-gradient(90deg, #e74c3c, #f39c12);
+        }
+
+        .announcement-title {
+            color: #2c3e50;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .announcement-title i {
+            margin-right: 10px;
+            color: #3498db;
+        }
+
+        .announcement-content {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .announcement-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: #7f8c8d;
+            border-top: 1px solid #ecf0f1;
+            padding-top: 12px;
+        }
+
+        .announcement-date {
+            display: flex;
+            align-items: center;
+        }
+
+        .announcement-date i {
+            margin-right: 5px;
+        }
+
+        .priority-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .priority-normal {
+            background: #95a5a6;
+        }
+
+        .priority-high {
+            background: #e74c3c;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .announcements-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .announcement-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .stats-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        .loading-animation {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-bullhorn"></i> Announcements</h1>
+            <p>Stay updated with the latest university news and important information</p>
+        </header>
+
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Portal
+        </a>
+
+        <div class="announcements-container">
+            <div class="announcements-header">
+                <i class="fas fa-newspaper"></i>
+                <h2>Latest Announcements</h2>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Total Announcements</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">This Week</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">High Priority</div>
+                </div>
+            </div>
+
+            <article class="announcement loading-animation" style="animation-delay: 0.1s">
+                <h3 class="announcement-title">
+                    <i class="fas fa-star"></i>
+                    Welcome to New Semester
+                </h3>
+                <div class="announcement-content">
+                    Welcome back students! The new semester begins on Monday. Please check your course schedules and prepare accordingly. Make sure to complete your registration and attend the orientation session.
+                </div>
+                <div class="announcement-meta">
+                    <div class="announcement-date">
+                        <i class="fas fa-calendar"></i>
+                        Posted on January 15, 2024 at 9:00 AM
+                    </div>
+                    <span class="priority-badge priority-high">High Priority</span>
+                </div>
+            </article>
+
+            <article class="announcement loading-animation" style="animation-delay: 0.2s">
+                <h3 class="announcement-title">
+                    <i class="fas fa-book"></i>
+                    Library Hours Update
+                </h3>
+                <div class="announcement-content">
+                    The library will be open extended hours during finals week. Monday-Friday: 7AM-11PM, Saturday-Sunday: 9AM-9PM. Additional study spaces have been made available in the student center.
+                </div>
+                <div class="announcement-meta">
+                    <div class="announcement-date">
+                        <i class="fas fa-calendar"></i>
+                        Posted on January 10, 2024 at 2:30 PM
+                    </div>
+                    <span class="priority-badge priority-normal">Normal</span>
+                </div>
+            </article>
+
+            <article class="announcement loading-animation" style="animation-delay: 0.3s">
+                <h3 class="announcement-title">
+                    <i class="fas fa-tools"></i>
+                    System Maintenance Notice
+                </h3>
+                <div class="announcement-content">
+                    The student portal will undergo scheduled maintenance on Saturday from 2AM-6AM. Services may be temporarily unavailable during this time. Please plan accordingly and complete any urgent tasks beforehand.
+                </div>
+                <div class="announcement-meta">
+                    <div class="announcement-date">
+                        <i class="fas fa-calendar"></i>
+                        Posted on January 8, 2024 at 4:45 PM
+                    </div>
+                    <span class="priority-badge priority-normal">Normal</span>
+                </div>
+            </article>
+
+            <article class="announcement loading-animation" style="animation-delay: 0.4s">
+                <h3 class="announcement-title">
+                    <i class="fas fa-clock"></i>
+                    Registration Deadline Reminder
+                </h3>
+                <div class="announcement-content">
+                    Course registration for next semester closes on Friday at 5PM. Don't forget to register for your required courses and check for any prerequisites. Contact your academic advisor if you need assistance.
+                </div>
+                <div class="announcement-meta">
+                    <div class="announcement-date">
+                        <i class="fas fa-calendar"></i>
+                        Posted on January 5, 2024 at 11:20 AM
+                    </div>
+                    <span class="priority-badge priority-normal">Normal</span>
+                </div>
+            </article>
+
+            <article class="announcement loading-animation" style="animation-delay: 0.5s">
+                <h3 class="announcement-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Campus Safety Alert
+                </h3>
+                <div class="announcement-content">
+                    Please be aware of construction work near the main entrance. Use the north entrance for safer access to campus buildings. Construction is expected to continue for the next two weeks.
+                </div>
+                <div class="announcement-meta">
+                    <div class="announcement-date">
+                        <i class="fas fa-calendar"></i>
+                        Posted on January 3, 2024 at 8:15 AM
+                    </div>
+                    <span class="priority-badge priority-normal">Normal</span>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling and interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate announcements on load
+            const announcements = document.querySelectorAll('.announcement');
+            announcements.forEach((announcement, index) => {
+                setTimeout(() => {
+                    announcement.style.opacity = '1';
+                }, index * 100);
+            });
+
+            // Add click effects
+            announcements.forEach(announcement => {
+                announcement.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

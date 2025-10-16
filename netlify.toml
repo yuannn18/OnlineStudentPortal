@@ -1,0 +1,13 @@
+[build]
+  publish = "."
+  command = "echo 'Build complete'"
+
+[[redirects]]
+  from = "/announcements"
+  to = "/announcements.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
